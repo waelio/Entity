@@ -10,21 +10,13 @@
 require 'Idea.php';
 
 
-$father = new Idea(array('name' => 'Salsa'));
+$father = new Idea(null, array('name' => 'Salsa'));
 
-$father->setType('span');
-$father->set_content('htgfghfghfgh fghf');
-
-
-
-
-
-//echo $father->getType();
+$father->setType(strval('span'));
+$father->set_content("This a Test");
+$father->setAttribute(array("style" => "background-color:red; padding:0 10px;"));
 
 $father->display();
-
-
-
 
 //debug_this($father);
 

@@ -12,6 +12,7 @@
 class Idea
 {
 	private $library = array('directions' => array('self', 'up', 'right', 'down', 'left'));
+	private $unaryTagArray = array('area','base','br','col','command','embed','hr','img','input','keygen','link','meta','param','source','track','wbr');
 	private $type;
 	private $attributes;
 	private $innerHtml;
@@ -21,8 +22,8 @@ class Idea
 
 	public function __construct($type = null, $attributeArray = array()){
 
-		$this->initiate($attributeArray);
 		$this->setType($type);
+		$this->initiate($attributeArray);
 		foreach($attributeArray as $attribute => $value) {
 			$this->setAttribute($attribute, $value);
 		}
@@ -57,7 +58,7 @@ class Idea
 	 */
 	protected function generate_code($length = 64){
 
-		$box_array = array(1,2,3,4,5,6,7,8,9,0,'jhg', 'RTJ', 'ZCG', '{;G', 'KRA', '!', '@', '$', '%', '^', '&', '*', '(', ')', '_', '=', '+');
+		$box_array = array(1,2,3,4,5,6,7,8,9,0,'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z', '!', '@', '$', '%', '^', '&', '*', '(', ')', '_', '=', '+');
 		$password = '';
 		for ($x = 0; $x < $length; $x++) {
 			$password .= $box_array[intval(array_rand($box_array))];
@@ -102,6 +103,11 @@ class Idea
 		else
 			$this->attributes['name'] = $this->identify();
 
+		$this->attributes['id'] = $this->ID;
+		$this->attributes['class'] = 'test_div';
+
+		$this->name = ((is_null($this->name))&&(!is_null($this->getAttribute('name')))) ? $this->getAttribute('name'):'NA';
+
 		return $this->ID;
 	}
 
@@ -115,8 +121,14 @@ class Idea
 	 * @param string $type
 	 * @return $this
 	 */
-	public function setType(string $type){
-		$this->type = strtolower(strval($type));
+	public function setType( $type){
+		$t = strval(  $type);
+		try{
+
+			$this->type = strtolower($t);
+		}catch (exception $e){
+
+		}
 
 		return $this;
 	}

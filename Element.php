@@ -19,14 +19,14 @@ class Element
 
 	/**
 	 * Element constructor.
-	 * @param $type
+	 * @param $type string
 	 * @param array $attributeArray
 	 */
 	public function __construct($type = null, $attributeArray = array())
 	{
 		$this->attributes = array();
 		if(!is_null($type)){
-			$this->type = strtolower($type);
+			$this->type = strtolower(strval($type));
 			foreach($attributeArray as $attribute => $value) {
 				$this->setAttribute($attribute, $value);
 			}

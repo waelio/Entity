@@ -22,7 +22,7 @@ class Element
 	 * @param $type string
 	 * @param array $attributeArray
 	 */
-	public function __construct($type = null, $attributeArray = array())
+	public function Element($type = null, $attributeArray = array())
 	{
 		$this->attributes = array();
 		if(!is_null($type)){

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: wahbehw
@@ -12,7 +13,7 @@
 class Element
 {
 	private $type;
-	private $unaryTagArray = array('area','base','br','col','command','embed','hr','img','input','keygen','link','meta','param','source','track','wbr');
+	private $unaryTagArray = array('area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr');
 	private $attributes;
 	private $innerHtml;
 	private $children;
@@ -25,14 +26,14 @@ class Element
 	public function Element($type = null, $attributeArray = array())
 	{
 		$this->attributes = array();
-		if(!is_null($type)){
+		if (!is_null($type)) {
 			$this->type = strtolower(strval($type));
-			foreach($attributeArray as $attribute => $value) {
+			foreach ($attributeArray as $attribute => $value) {
 				$this->setAttribute($attribute, $value);
 			}
-		}else{
-			$this-> type = 'temp';
-			foreach($attributeArray as $attribute => $value) {
+		} else {
+			$this->type = 'temp';
+			foreach ($attributeArray as $attribute => $value) {
 				$this->setAttribute($attribute, $value);
 			}
 		}
@@ -48,10 +49,9 @@ class Element
 	 */
 	public function setAttribute($attribute, $value = "")
 	{
-		if(!is_array($attribute)) {
+		if (!is_array($attribute)) {
 			$this->attributes[$attribute] = $value;
-		}
-		else {
+		} else {
 			$this->attributes = array_merge($this->attributes, $attribute);
 		}
 
@@ -63,7 +63,8 @@ class Element
 	 *
 	 * @return string
 	 */
-	public function getType(){
+	public function getType()
+	{
 		return ucfirst(strval($this->type));
 	}
 
@@ -73,7 +74,8 @@ class Element
 	 * @param string $type
 	 * @return $this
 	 */
-	public function setType($type){
+	public function setType($type)
+	{
 		$this->type = strtolower($type);
 
 		return $this;
@@ -93,7 +95,8 @@ class Element
 	/**
 	 * @return array
 	 */
-	function displayAttributes(){
+	function displayAttributes()
+	{
 		return $this->attributes;
 	}
 
@@ -105,7 +108,7 @@ class Element
 	 */
 	function removeAttribute($attribute)
 	{
-		if(isset($this->attributes[$attribute])) {
+		if (isset($this->attributes[$attribute])) {
 			unset($this->attributes[$attribute]);
 		}
 		return $this;
@@ -116,7 +119,8 @@ class Element
 	 *
 	 * Clear all of the element's attributes
 	 */
-	function clearAttributes() {
+	function clearAttributes()
+	{
 		$this->attributes = array();
 		return $this;
 	}
@@ -129,14 +133,12 @@ class Element
 	 */
 	function inject($object)
 	{
-		if(@get_class($object) == __class__) {
+		if (@get_class($object) == __CLASS__) {
 
 			$this->innerHtml .= $object->build();
-
-		}elseif(is_string($object)){
+		} elseif (is_string($object)) {
 
 			$this->innerHtml .= $object;
-
 		}
 		return $this;
 	}
@@ -149,7 +151,8 @@ class Element
 	 *
 	 * @return object
 	 */
-	function  setStyle($cssAt,$value){
+	function  setStyle($cssAt, $value)
+	{
 		//@TODO enhance this functionality to allow additions/modifications and deletion
 		$this->setAttribute("style", "$cssAt:$value;");
 
@@ -185,24 +188,22 @@ class Element
 	 *
 	 * @return string
 	 */
-	function build(){
+	function build()
+	{
 		// Start the tag
-		$element = "<".$this->type;
+		$element = "<" . $this->type;
 		// Add attributes
-		if(count($this->attributes)) {
-			foreach($this->attributes as $key => $value) {
-				$element .= " ".$key."=\"".$value."\"";
+		if (count($this->attributes)) {
+			foreach ($this->attributes as $key => $value) {
+				$element .= " " . $key . "=\"" . $value . "\"";
 			}
 		}
 		// Close the element
-		if(!in_array($this->type, $this->unaryTagArray)) {
-			$element.= ">" . $this->innerHtml . "</".$this->type.">\n";
-		}
-		else {
-			$element.= " />\n";
+		if (!in_array($this->type, $this->unaryTagArray)) {
+			$element .= ">" . $this->innerHtml . "</" . $this->type . ">\n";
+		} else {
+			$element .= " />\n";
 		}
 		return $element;
 	}
-
-
 }

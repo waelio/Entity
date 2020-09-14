@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: wahbehw
@@ -19,10 +20,10 @@ class Entity
 	private $is_Parent = false;
 	private $is_child = false;
 
-	function __construct($name=null){
+	function __construct($name = null)
+	{
 
 		return $this->initiate($name);
-
 	}
 
 	/**
@@ -43,9 +44,10 @@ class Entity
 	 *
 	 * @return string
 	 */
-	protected function generate_code($length = 64){
+	protected function generate_code($length = 64)
+	{
 
-		$box_array = array(1,2,3,4,5,6,7,8,9,0,'jhg', 'RTJ', 'ZCG', '{;G', 'KRA', '!', '@', '$', '%', '^', '&', '*', '(', ')', '_', '=', '+');
+		$box_array = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 'jhg', 'RTJ', 'ZCG', '{;G', 'KRA', '!', '@', '$', '%', '^', '&', '*', '(', ')', '_', '=', '+');
 		$password = '';
 		for ($x = 0; $x < $length; $x++) {
 			$password .= $box_array[intval(array_rand($box_array))];
@@ -54,28 +56,27 @@ class Entity
 		$this->PASS = $this->encrypt($password);
 
 		return $password;
-
 	}
 
-	function encrypt($val){
+	function encrypt($val)
+	{
 		return md5($val);
 	}
 
 
-	function initiate($name ,$force=false){
+	function initiate($name, $force = false)
+	{
 
-		if(is_null($this->ID)){
+		if (is_null($this->ID)) {
 			$this->ID = $this->generate_code(17);
-		}
-		elseif (!is_null($this->ID) && $force){
+		} elseif (!is_null($this->ID) && $force) {
 			$this->ID = $this->generate_code(17);
-		}
-		else
+		} else
 			$this->ID = $this->generate_code(17);
 
 
 
-		if(!is_null($name) && is_null($this->name))
+		if (!is_null($name) && is_null($this->name))
 			$this->name = $name;
 		else
 			$this->name = $this->identify();
@@ -84,7 +85,8 @@ class Entity
 	}
 
 
-	protected function run($params,$commands){
+	protected function run($params, $commands)
+	{
 
 		foreach ($params as $k => $v) {
 			$this->{$k} = $v;
@@ -100,23 +102,25 @@ class Entity
 	}
 
 
-	public function identify(){
+	public function identify()
+	{
 
 		return $this->ID;
 	}
 
-	function _create($commands,$params){
+	function _create($commands, $params)
+	{
 
-		if (in_array($params['direction'],$this->library['directions'])){
-			if ($params['direction']!='self')
-				return new Entity($params['direction'],$commands);
+		if (in_array($params['direction'], $this->library['directions'])) {
+			if ($params['direction'] != 'self')
+				return new Entity($params['direction'], $commands);
 			else
 				return $this->identify();
 		}
 
-		$this->initiate('self','identify');
+		$this->initiate('self', 'identify');
 
 
-		return $this->initiate('self','identify');
+		return $this->initiate('self', 'identify');
 	}
 }
